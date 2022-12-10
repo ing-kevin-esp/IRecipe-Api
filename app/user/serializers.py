@@ -20,7 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        """Create and return a user with encripted password, only called after Meta validation has passed"""
+        """Create and return a user with encripted password"""
+        """only called after Meta validation has passed"""
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
@@ -39,7 +40,7 @@ class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the user auth token."""
     email = serializers.EmailField()
     password = serializers.CharField(
-        style={'input_type':'password'},
+        style={'input_type': 'password'},
         trim_whitespace=False,
     )
 

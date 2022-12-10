@@ -22,7 +22,7 @@ class PublicUserApiTests(TestCase):
     """Test the public features of the user api"""
 
     def setUp(self):
-        #method called automatically when running test
+        # method called automatically when running test
         self.client = APIClient()
 
     def test_create_user_success(self):
@@ -142,7 +142,7 @@ class PrivateUserApiTests(TestCase):
         self.assertEqual(res.data, {
             'name': self.user.name,
             'email': self.user.email,
-            }
+        }
         )
 
     def test_post_me_not_allowed(self):
@@ -154,11 +154,10 @@ class PrivateUserApiTests(TestCase):
     def test_update_user_profile(self):
         """Test updating the useer profile for the authenticated user"""
 
-        payload = {'name':'new name', 'password':'newPassword'}
+        payload = {'name': 'new name', 'password': 'newPassword'}
         res = self.client.patch(ME_URL, payload)
-        # Call manually refresh, cause the new data is not refreshed automatically
+        # Manually refresh, cause the new data is not refreshed automatically
         self.user.refresh_from_db()
         self.assertEqual(self.user.name, payload['name'])
         self.assertTrue(self.user.check_password(payload['password']))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-
